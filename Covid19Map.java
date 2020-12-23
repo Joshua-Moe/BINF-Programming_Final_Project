@@ -1,31 +1,16 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.lang.reflect.Array;
 import java.util.HashMap;
-
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
-
 
 
 public class Covid19Map extends JFrame 
@@ -478,16 +463,7 @@ public class Covid19Map extends JFrame
 			}
 		}
 		reader.close();
-		//System.out.println("North Carolina at March 1st: " + NC.get("3/1/2020"));
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	private static final long serialVersionUID = 1L;
@@ -501,24 +477,11 @@ public class Covid19Map extends JFrame
 	@Override
 	public void paint(Graphics g)
 	{
-		int doThisOnce = 0;
-		//super.paint(g);
-		//bufferedImage
+		super.paintComponents(g);
+		
 		try
 		{
-			/*
-			Image img = new ImageIcon("C:\\UNC_Fall_2020\\BINF_Advanced_Programming\\Project\\royalty_free_map_of_United_States.jpg").getImage();
-			BufferedImage b = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_RGB);
-			g.drawImage(b, 0, 0, getWidth(), (int)(getHeight()*0.9), this);
-			*/
-			if (doThisOnce == 0)
-			{
-				g.drawImage( ImageIO.read(new File("C:\\UNC_Fall_2020\\BINF_Advanced_Programming\\Project\\royalty_free_map_of_United_States.jpg")), 0, 0, getWidth(), (int)(getHeight()*0.9), this);
-				doThisOnce++;
-			}
-			
-			
-			//g.drawImage( ImageIO.read(new File("C:\\UNC_Fall_2020\\BINF_Advanced_Programming\\Project\\royalty_free_map_of_United_States.jpg")), 0, 0, getWidth(), (int)(getHeight()*0.9), this);
+			g.drawImage( ImageIO.read(new File("C:\\UNC_Fall_2020\\BINF_Advanced_Programming\\Project\\royalty_free_map_of_United_States.jpg")), 0, 0, getWidth(), (int)(getHeight()*0.9), this);
 		}
 		catch(Exception ex)
 		{
@@ -534,7 +497,6 @@ public class Covid19Map extends JFrame
 		g.drawString("CO " + CO.get(dateIndex.get(mySlider.getValue())),240,200);
 		g.drawString("CT " + CT.get(dateIndex.get(mySlider.getValue())),720,130);
 		g.drawString("DE " + DE.get(dateIndex.get(mySlider.getValue())),720,185);
-		//g.drawString("DC " + DC.get(dateIndex.get(mySlider.getValue())),135,400);
 		g.drawString("FL " + FL.get(dateIndex.get(mySlider.getValue())),700,400);
 		g.drawString("GA " + GA.get(dateIndex.get(mySlider.getValue())),595,315);
 		g.drawString("HI " + HI.get(dateIndex.get(mySlider.getValue())),285,450);
@@ -578,22 +540,14 @@ public class Covid19Map extends JFrame
 		g.drawString("WI " + WI.get(dateIndex.get(mySlider.getValue())),470,110);
 		g.drawString("WY " + WY.get(dateIndex.get(mySlider.getValue())),220,140);
 		
+		g.drawString("DATE: " + dateIndex.get(mySlider.getValue()),500,450);
 		
 		sPanel.validate();
 	}
 	
-	/**
-	private Image myImage()
-	{
-		BufferedImage image = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
-		return image;
-	}
-	**/
-	
 	
 	private JPanel sliderPanel()
 	{
-		//JPanel sPanel = new JPanel();
 		sPanel.setLayout(new BorderLayout());
 		sPanel.add(mySlider, BorderLayout.CENTER);
 		return sPanel;
@@ -601,54 +555,29 @@ public class Covid19Map extends JFrame
 	
 	public Covid19Map() 
 	{
-	getContentPane().setLayout(new BorderLayout());
+		getContentPane().setLayout(new BorderLayout());
 	
-	//add(new JLabel(new ImageIcon("C:\\UNC_Fall_2020\\BINF_Advanced_Programming\\Project\\royalty_free_map_of_United_States.jpg")));
-	//JComponent ic = new JComponent("C:\\UNC_Fall_2020\\BINF_Advanced_Programming\\Project\\royalty_free_map_of_United_States.jpg");
 	
-	//Image myI = Toolkit.getDefaultToolkit().getImage("C:\\UNC_Fall_2020\\BINF_Advanced_Programming\\Project\\royalty_free_map_of_United_States.jpg");
-		
-		
-		
-		/**
-		this.setContentPane(new JPanel() {
-			private static final long serialVersionUID = 1L;
+	
+	
+		mySlider.addChangeListener(new ChangeListener()
+		{
+
 			@Override
-			public void paintComponent(Graphics g) 
+			public void stateChanged(ChangeEvent e)
 			{
-				super.paintComponent(g);
-				g.drawImage(myI, 0, 0, getWidth(), (int)(getHeight()*0.9), this);
+				repaint();
 			}
 		});
-		**/
 	
 	
-	
-	
-	//getContentPane().add(sliderPanel(), BorderLayout.SOUTH);
-	mySlider.addChangeListener(new ChangeListener()
-	{
-
-	@Override
-	public void stateChanged(ChangeEvent e)
-	{
-	
-		repaint();
-		//mySlider.repaint();
-	
-	}
-	});
-	
-	//mySlider.setVisible(true);
-	//mySlider.setLayout(FlowLayout.CENTER);
-	getContentPane().add(sliderPanel(), BorderLayout.SOUTH);
-	
-	//setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	setSize(800,600);
-	setLocation(100,100);
-	setResizable(false);
-	setVisible(true);
+		getContentPane().add(sliderPanel(), BorderLayout.SOUTH);
+		
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(800,600);
+		setLocation(100,100);
+		setResizable(false);
+		setVisible(true);
 	}
 
 
